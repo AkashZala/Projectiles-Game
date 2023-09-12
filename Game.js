@@ -138,6 +138,19 @@ window.addEventListener('click', (event) => {
 
 });
 
+//mobile input
+window.addEventListener('touchstart', (event) => {
+    const angle = Math.atan2(event.clientY - y, event.clientX - x);
+    const velocity = {
+        x: Math.cos(angle) * 7,
+        y: Math.sin(angle) * 7
+    }
+    blasts.push(new Blast(
+        x, y, 10, 'whitesmoke', velocity
+    ))
+
+});
+
 startButton.addEventListener('click', () => {
     init();
     animate();
