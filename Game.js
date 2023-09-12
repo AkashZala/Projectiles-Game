@@ -11,6 +11,98 @@ canvas.height = innerHeight;
 const x = canvas.width / 2;
 const y = canvas.height / 2;
 
+class Player {
+    constructor(x, y, radius, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+    }
+
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+    }
+}
+
+class Blast {
+    constructor(x, y, radius, color, velocity) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.velocity = velocity
+    }
+
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+    }
+
+    update() {
+        this.draw();
+        this.x = this.x + this.velocity.x;
+        this.y = this.y + this.velocity.y;
+    }
+}
+
+class Baddie {
+    constructor(x, y, radius, color, velocity) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.velocity = velocity
+    }
+
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+    }
+
+    update() {
+        this.draw();
+        this.x = this.x + this.velocity.x;
+        this.y = this.y + this.velocity.y;
+    }
+}
+
+class Particle {
+    constructor(x, y, radius, color, velocity) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+        this.velocity = velocity;
+        this.alpha = 1;
+    }
+
+    draw() {
+        c.save();
+        c.globalAlpha = this.alpha;
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        c.fillStyle = this.color;
+        c.fill();
+        c.restore();
+    }
+
+    update() {
+        this.draw();
+        this.velocity.x *= .99;
+        this.velocity.y *= .99;
+        this.x = this.x + this.velocity.x;
+        this.y = this.y + this.velocity.y;
+        this.alpha -= 0.01;
+    }
+}
+
 let blasts = [];
 let baddies = [];
 let particles = [];
@@ -127,19 +219,6 @@ function animate() {
 }
 
 window.addEventListener('click', (event) => {
-    const angle = Math.atan2(event.clientY - y, event.clientX - x);
-    const velocity = {
-        x: Math.cos(angle) * 7,
-        y: Math.sin(angle) * 7
-    }
-    blasts.push(new Blast(
-        x, y, 10, 'whitesmoke', velocity
-    ))
-
-});
-
-//mobile input
-window.addEventListener('touchend', (event) => {
     const angle = Math.atan2(event.clientY - y, event.clientX - x);
     const velocity = {
         x: Math.cos(angle) * 7,
