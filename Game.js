@@ -51,7 +51,7 @@ function spawnBaddies() {
         baddies.push(new Baddie(
             spawnX, spawnY, radius, color, velocity
         ));
-    }, 2000);
+    }, 1000);
 }
 
 function animate() {
