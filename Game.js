@@ -139,7 +139,7 @@ window.addEventListener('click', (event) => {
 });
 
 //mobile input
-window.addEventListener('touchstart', (event) => {
+window.addEventListener('touchend', (event) => {
     const angle = Math.atan2(event.clientY - y, event.clientX - x);
     const velocity = {
         x: Math.cos(angle) * 7,
