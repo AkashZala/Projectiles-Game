@@ -124,7 +124,7 @@ function init() {
 
 function spawnBaddies() {
     const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
-    const radius = (Math.random() * 25) + 7;
+    const radius = (Math.random() * 32) + 8;
     let spawnX;
     let spawnY;
 
@@ -203,7 +203,7 @@ function animate() {
                         }));
                 }
 
-                if (baddie.radius - 10 > 5) {
+                if (baddie.radius - 10 > 8) {
 
                     score += 100;
                     scoreEl.innerHTML = score;
