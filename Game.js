@@ -124,7 +124,7 @@ function init() {
 
 function spawnBaddies() {
     const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
-    const radius = (Math.random() * 32) + 8;
+    const radius = (Math.random() * 25) + 8;
     let spawnX;
     let spawnY;
 
@@ -150,10 +150,14 @@ function animate() {
     animationId = requestAnimationFrame(animate);
     frames++;
 
-    if (frames <= 1800) {
+    if (frames < 1800) {
+        if (frames % 144 === 0) { spawnBaddies() }
+    } else if (frames < 2400) {
         if (frames % 120 === 0) { spawnBaddies() }
-    } else {
+    } else if (frames < 3600) {
         if (frames % 60 === 0) { spawnBaddies() }
+    } else {
+        if (frames % 30 === 0) { spawnBaddies() }
     }
 
     c.fillStyle = 'rgba(0, 0, 0, .1)'
