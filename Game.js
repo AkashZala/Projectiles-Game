@@ -108,6 +108,7 @@ let baddies = [];
 let particles = [];
 let animationId;
 let score = 0;
+let frames = 0;
 let player = new Player(x, y, 20, 'whitesmoke')
 
 function init() {
@@ -115,39 +116,46 @@ function init() {
     baddies = [];
     particles = [];
     score = 0;
+    frames = 0;
     player = new Player(x, y, 20, 'whitesmoke')
     scoreEl.innerHTML = score;
     bigScoreEl.innerHTML = score;
 }
 
 function spawnBaddies() {
-    setInterval(() => {
-        const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
-        const radius = (Math.random() * 25) + 7;
-        let spawnX;
-        let spawnY;
+    const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+    const radius = (Math.random() * 25) + 7;
+    let spawnX;
+    let spawnY;
 
-        if (Math.random() < .5) {
-            spawnX = Math.random() < .5 ? 0 - radius : canvas.width + radius;
-            spawnY = Math.random() * canvas.height;
-        } else {
-            spawnX = Math.random() * canvas.width;
-            spawnY = Math.random() < .5 ? 0 - radius : canvas.height + radius;
-        }
+    if (Math.random() < .5) {
+        spawnX = Math.random() < .5 ? 0 - radius : canvas.width + radius;
+        spawnY = Math.random() * canvas.height;
+    } else {
+        spawnX = Math.random() * canvas.width;
+        spawnY = Math.random() < .5 ? 0 - radius : canvas.height + radius;
+    }
 
-        const angle = Math.atan2(y - spawnY, x - spawnX);
-        const velocity = {
-            x: Math.cos(angle),
-            y: Math.sin(angle)
-        }
-        baddies.push(new Baddie(
-            spawnX, spawnY, radius, color, velocity
-        ));
-    }, 1000);
+    const angle = Math.atan2(y - spawnY, x - spawnX);
+    const velocity = {
+        x: Math.cos(angle),
+        y: Math.sin(angle)
+    }
+    baddies.push(new Baddie(
+        spawnX, spawnY, radius, color, velocity
+    ));
 }
 
 function animate() {
     animationId = requestAnimationFrame(animate);
+    frames++;
+
+    if (frames <= 1800) {
+        if (frames % 120 === 0) { spawnBaddies() }
+    } else {
+        if (frames % 60 === 0) { spawnBaddies() }
+    }
+
     c.fillStyle = 'rgba(0, 0, 0, .1)'
     c.fillRect(0, 0, canvas.width, canvas.height)
     player.draw();
@@ -233,6 +241,5 @@ window.addEventListener('click', (event) => {
 startButton.addEventListener('click', () => {
     init();
     animate();
-    spawnBaddies();
     modalEl.style.display = 'none';
 });
